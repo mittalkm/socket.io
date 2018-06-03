@@ -7,6 +7,7 @@ var socket=io();
         var li=jQuery('<li></li>');
         li.text(`${msg.from}: ${msg.text}`);
         jQuery("#messages").append(li);
+        jQuery('[name=message]').val("");
     });
     socket.on('disconnect',function(){
         console.log('Server disconnected');
