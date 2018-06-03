@@ -8,22 +8,17 @@ const app=express();
 var server=http.createServer(app);
 var io=socketIO(server);
 app.use(express.static(publicPath));
-
+// socket.emit for a single connection.
+// io.emit for every single connection.
 io.on('connection',(socket)=>{
     console.log('New User Connected');
-    socket.emit('newEmail',{
-        from:'mittalkunal47@gmaiil.com',
-        text:'Text of mail'
-    });
-    socket.emit('newMessage',{
-        from:'mittalkunal47@gmaiil.com',
-        text:'Text of mail'
-    });
-    socket.on('createEmail',(newEmail)=>{
-        console.log('Create Email',newEmail);
-    });
     socket.on('createMessage',(newMsg)=>{
         console.log('Create Message',newMsg);
+        io.emit('newMessage',{
+            from:newMsg.from,
+            text:newMsg.text,
+            createdAt:new Date().getTime()
+        });
     })
     socket.on('disconnect',()=>{
         console.log('User DisConnected');
