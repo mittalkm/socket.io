@@ -16,9 +16,10 @@ io.on('connection',(socket)=>{
     console.log('New User Connected');
     socket.emit('newMessage',generateMessage('admin','Welcome Buddy!'));
     socket.broadcast.emit('newMessage',generateMessage('admin','New Buddy In The House!'))
-    socket.on('createMessage',(newMsg)=>{
+    socket.on('createMessage',(newMsg,callback)=>{
         console.log('Create Message',newMsg);
         io.emit('newMessage',generateMessage(newMsg.from,newMsg.text));
+        callback('This Is From Server');
         // socket.broadcast.emit('newMessage',{
         //     from:newMsg.from,
         //     text:newMsg.text,
