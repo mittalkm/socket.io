@@ -8,6 +8,7 @@ const app=express();
 var server=http.createServer(app);
 var io=socketIO(server);
 const {generateMessage}=require('./utils/message.js');
+const {generateLocationMessage}=require('./utils/message.js');
 app.use(express.static(publicPath));
 // socket.emit for a single connection.
 // io.emit for every single connection.
@@ -25,7 +26,10 @@ io.on('connection',(socket)=>{
         //     text:newMsg.text,
         //     createdAt:new Date().getTime()
         // });
-    })
+    });
+    socket.on('createLocationMessage',(coords)=>{
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
+    });
     socket.on('disconnect',()=>{
         console.log('User DisConnected');
     });
