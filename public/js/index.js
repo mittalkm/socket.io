@@ -31,9 +31,9 @@ var socket=io();
     });
     socket.on('newLocationMessage',function(message){
         var li=jQuery('<li></li>');
-        var Time=moment(msg.createdAt).format('h:mm a');
+        var time=moment(message.createdAt).format('h:mm a');
         var a=jQuery('<a target="_blank" >My Location</a>')
-        li.text(`${message.from} ${Time}: `);
+        li.text(`${message.from} ${time}: `);
         a.attr('href',message.url);
         li.append(a);
         jQuery("#messages").append(li);
